@@ -43,11 +43,11 @@ exports.actualizaProyecto = async (req, res) => {
     return res.status(400).json({ errores: errores.array() });
   }
     //extraer la informacion del proyecto
-    let { nombre } = req.body;
-    let nuevoProyecto = {};
+    const { nombre } = req.body;
+    const nuevoProyecto = {};
 
     if (nombre) {
-      nuevoProyecto = nombre;
+      nuevoProyecto.nombre = nombre;
     }
 
   try {

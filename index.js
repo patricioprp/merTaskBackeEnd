@@ -1,5 +1,5 @@
-const express = require('express');
-const conectarDB  = require('./config/db');
+const express = require("express");
+const conectarDB = require("./config/db");
 
 //crear el servidor
 const app = express();
@@ -8,20 +8,23 @@ const app = express();
 conectarDB();
 
 //habilitar express.json() nos evitamos usar bodyparse, para los headers etc
-app.use( express.json({extended: true}));
+app.use(express.json({ extended: true }));
 
 //puerto de la app
 const PORT = process.env.PORT || 4000; //4000 o cualquiera diferente al 3000 q es el de react
 
 //Importar Rutas
-app.use('/api/usuarios',require('./routes/usuarios'));
+app.use("/api/usuarios", require("./routes/usuarios"));
+app.use("/api/auth", require("./routes/auth"));
+app.use("/api/proyectos", require("./routes/proyectos"));
+
 
 //definir la pagina principal
-app.get('/',(req,res) => {
-    res.send('hola mundo');
+app.get("/", (req, res) => {
+  res.send("hola mundo");
 });
 
 //vamos a arrancar la app
 app.listen(PORT, () => {
-    console.log(`el servidor esta funcionando ${PORT}`);
+  console.log(`el servidor esta funcionando ${PORT}`);
 });

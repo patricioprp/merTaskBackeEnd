@@ -50,3 +50,16 @@ exports.autenticarUsuario = async (req, res) => {
     console.log(error);
   }
 };
+
+//Obtiene que usuario eta autenticado
+exports.usuarioAutenticado = async(req,res) => {
+
+  try {
+    const usuario = await Usuario.findById(req.usuario.id).select('-password');//Vamos a ignorar el password por mas que esta hasheado
+    //el middleware auth nos abliga que estar autenticado si llegamos aqui
+    res.json({usuario});
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({msg:'Hubo un error'})
+  }
+}

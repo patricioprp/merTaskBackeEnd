@@ -36,8 +36,8 @@ exports.crearTarea = async (req, res) => {
 exports.obtenerTareas = async (req, res) => {
   try {
     //Extraer el proyecto y comprobar si existe
-    const { proyecto } = req.query; // cuando la peticion es get y tiene parametros, estos no se los toma del req.body sino del req.query
-    //console.log(req);
+    const { proyecto } = req.body; // cuando la peticion es get y tiene parametros, estos no se los toma del req.body sino del req.query
+    //console.log(req.query);
     const existeProyecto = await Proyecto.findById(proyecto);
     if (!existeProyecto) {
       return res.status(404).json({ msg: "Proyecto no encontrado " });

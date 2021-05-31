@@ -36,8 +36,8 @@ exports.crearTarea = async (req, res) => {
 exports.obtenerTareas = async (req, res) => {
   try {
     //Extraer el proyecto y comprobar si existe
-    const { proyecto } = req.body; // cuando la peticion es get y tiene parametros, estos no se los toma del req.body sino del req.query
-    //console.log(req.query);
+    const { proyecto } = req.query; // cuando la peticion es get y tiene parametros, estos no se los toma del req.body sino del req.query
+    //console.log(req.query); si lo envio como params desde el front
     const existeProyecto = await Proyecto.findById(proyecto);
     if (!existeProyecto) {
       return res.status(404).json({ msg: "Proyecto no encontrado " });
@@ -48,7 +48,7 @@ exports.obtenerTareas = async (req, res) => {
     }
 
     //Obtener las tareas por proyecto
-    const tareas = await Tarea.find({ proyecto });
+    const tareas = await Tarea.find({ proyecto }).sort({creado: -1});//el sort es para que las tareas mas nuevas esten al principio
     return res.json({ tareas });
   } catch (error) {
     console.log(error);
@@ -97,8 +97,7 @@ exports.actualizarTarea = async (req, res) => {
 exports.eliminarTarea = async (req, res) => {
   try {
     // Extraer el proyecto y comprobar si existe
-    const { proyecto } = req.body;
-
+    const { proyecto } = req.query;
     // Si la tarea existe o no
     let tarea = await Tarea.findById(req.params.id);
 
